@@ -1,0 +1,14 @@
+--- This file is part of LuaDist project
+
+name = "genx"
+version = "0.5.0"
+
+desc = "A library for safely generating XML."
+author = "Adrian Sampson"
+license = "BSD"
+maintainer = "Peter Kapec"
+url = "http://genx.luaforge.net/"
+
+depends = {
+	"lua ~> 5.1",
+}

@@ -1,0 +1,44 @@
+--- A safe XML generation library.
+-- Genx is a C library by Tim Bray for generating well-formed XML. This is
+-- a simple Lua binding.
+module "genx"
+
+--- Create a new XML document.
+-- There are two ways to create an XML document. First, genx.new(file) creates
+-- a document that writes its contents to a file. Alternatively,
+-- genx.new(send[, flush]) creates a document that calls functions to output
+-- XML. The "send" function is mandatory while "flush" is optional.
+-- @param file An open, writable file object.
+-- @param send A callback function invoked whenever new text is available.
+--             Should take a single string argument.
+-- @param flush A callback function invoked to flush any buffers and finish a
+--              document. Should take no parameters. Optional.
+-- @return A document object.
+function new()
+
+--- Add a comment to the XML document.
+-- @param text The comment to add. Should not contain "--".
+function document:comment(text)
+
+--- Open a new element.
+-- @param name The "tag name" of the element to open.
+function document:startElement(name)
+
+--- Close an element tag.
+-- Closes the most recent open element tag.
+function document:endElement()
+
+--- Add an attribute to the currently open tag.
+-- @param key The name of the attribute to add.
+-- @param value The value of the new attribute.
+function document:attribute(key, value)
+
+--- Add text to the document.
+-- @param text The string to add.
+function document:text(text)
+
+--- Finish the document.
+-- Finishes writing the document and calls the flush function, if available.
+-- Invoked automatically by garbage collection. Has no effect if the document
+-- has already been closed.
+function document:close()

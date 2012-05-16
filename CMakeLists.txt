@@ -1,23 +1,22 @@
-# Copyright (C) 2007-2009 LuaDist.
-# Created by Peter Kapec
+# Copyright (C) 2007-2012 LuaDist.
+# Created by Peter Kapec, Peter Drahoš
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.
 
-PROJECT(lgenx C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-INCLUDE(dist.cmake)
+project ( lgenx C )
+cmake_minimum_required ( VERSION 2.8 )
+include ( cmake/dist.cmake )
+include ( lua )
 
 # Build
-INCLUDE_DIRECTORIES(genx)
+include_directories ( genx )
+add_library ( genx_lib genx/genx.c genx/charProps.c )
+set_target_properties ( genx_lib PROPERTIES OUTPUT_NAME genx CLEAN_DIRECT_OUTPUT 1 )
 
-ADD_LIBRARY(genx_lib SHARED genx/genx.c genx/charProps.c)
-SET_TARGET_PROPERTIES ( genx_lib PROPERTIES OUTPUT_NAME genx CLEAN_DIRECT_OUTPUT 1 )
+install_library ( genx_lib )
+install_lua_module ( genx lgenx.c LINK genx_lib )
 
-ADD_LUA_MODULE(genx lgenx.c)
-TARGET_LINK_LIBRARIES(genx genx_lib)
 
-# Install all files and documentation
-INSTALL (TARGETS genx genx_lib RUNTIME DESTINATION ${INSTALL_BIN} LIBRARY DESTINATION ${INSTALL_LIB} ARCHIVE DESTINATION ${INSTALL_LIB})
-INSTALL (FILES doc/api.html doc/index.html doc/license.html doc/manual.html doc/luadoc.css DESTINATION ${INSTALL_DOC})
-INSTALL (FILES test.lua DESTINATION ${INSTALL_TEST})
+install_doc ( doc/api.html doc/index.html doc/license.html doc/manual.html doc/luadoc.css )
+install_test ( test.lua )

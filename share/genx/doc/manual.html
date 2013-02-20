@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>genx: a safe XML generator for Lua</title>
+    <link rel="stylesheet" href="http://www.keplerproject.org/doc.css" type="text/css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_name"><big><b>genx</b></big></div>
+	<div id="product_description">a safe XML generator for Lua</div>
+</div>
+
+<div id="main">
+
+<div id="navigation">
+<h1>yaml</h1>
+<ul>
+    <li><a href="index.html">Home</a>
+        <ul>
+            <li><a href="index.html#over">Overview</a></li>
+            <li><a href="index.html#status">Status</a></li>
+            <li><a href="index.html#download">Download</a></li>
+            <li><a href="index.html#history">History</a></li>
+            <li><a href="index.html#credits">Credits</a></li>
+            <li><a href="index.html#related">Related Work</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </li>
+    <li><strong>Manual</strong>
+        <ul>
+            <li><a href="manual.html#install">Installing</a></li>
+            <li><a href="manual.html#example">Example</a></li>
+            <li><a href="manual.html#filesend">Files and Senders</a></li>
+            <li><a href="manual.html#api">API Reference</a></li>
+        </ul>
+    </li>
+    <li><a href="http://bitbucket.org/adrian/lgenx/">Project</a>
+        <ul>
+            <li><a href="http://bitbucket.org/adrian/lgenx/src/">Source</a></li>
+            <li><a href="http://bitbucket.org/adrian/lgenx/issues/">Bug Tracker</a></li>
+        </ul>
+    </li>
+    <li><a href="license.html">License</a></li>
+</ul>
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h2><a name="install"></a>Installing</h2>
+
+<p>You can install genx with <a href="http://www.luarocks.org/">LuaRocks</a>:</p>
+
+<p style="font-family: monospace;">$ luarocks install http://genx.luaforge.net/genx-0.5.0-1.rockspec</p>
+
+<h2><a name="example"></a>Example</h2>
+
+Here's a contrived example that writes an XML document to the standard output.
+
+<pre class="example">
+    require 'genx'
+    d = genx.new(io.stdout)
+    
+    d:startElement('farm')
+
+    d:startElement('crop')
+    d:attribute('type', 'fruit')
+    d:text('Apricots')
+    d:endElement()
+
+    d:startElement('crop')
+    d:attribute('type', 'vegetable')
+    d:text('Zucchini')
+    d:endElement()
+
+    d:endElement()
+</pre>
+
+This program outputs the following:
+
+<pre class="example">
+&lt;farm&gt;&lt;crop type="fruit"&gt;Apricots&lt;/crop&gt;&lt;crop type="vegetable"&gt;Zucchini&lt;/crop&gt;&lt;/farm&gt;
+</pre>
+
+<h2><a name="filesend"></a>Files and Senders</h2>
+
+There are two ways of initializing XML documents in genx; they direct their output differently. In the first, the XML output is just sent to an open, writable filehandle. This is used in the above example: <code>io.stdout</code> is the destination file. The usual thing is to do something like this:
+
+<pre class="example">
+doc = genx.new(io.open('out.xml', 'w'))
+</pre>
+
+The second method is to use callback functions to do whatever you please with the output. You can define a <code>send</code> method, which handles new output, and (optionally) a <code>flush</code> method, to flush any buffers you may keep around. If you're writing XML over a network, for example, you might do something like this:
+
+<pre class="example">
+function send(text)
+    someSocket:write(text)
+end
+doc = genx.new(send)
+</pre>
+
+If you need to use a <code>flush</code> method, make it the second argument to <code>new</code>. It should take no arguments.
+
+<h2><a name="api"></a>API Reference</h2>
+
+<a href="api.html">Function-level LuaDoc documentation</a> is available for more specifics on the functions provided by this Lua library. If you need even more detail, you may be interested in reading the original <a href="http://www.tbray.org/ongoing/genx/docs/Guide.html">documentation for the Genx C library</a>.
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+</div> <!-- id="container" -->
+
+</body>
+</html>

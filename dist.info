@@ -1,0 +1,33 @@
+type = "x86_64"
+arch = "Ubuntu"
+author = "Adrian Sampson"
+depends = {
+[[lua ~> 5.1]],
+}
+
+desc = "A library for safely generating XML."
+version = "0.5.0"
+maintainer = "Peter Kapec"
+files = {
+Runtime = {
+[[lib/libgenx.so]],
+[[lib/lua/genx.so]],
+}
+,
+Documentation = {
+[[share/genx/doc/api.html]],
+[[share/genx/doc/index.html]],
+[[share/genx/doc/license.html]],
+[[share/genx/doc/manual.html]],
+[[share/genx/doc/luadoc.css]],
+}
+,
+Test = {
+[[share/genx/test/test.lua]],
+}
+,
+}
+
+license = "BSD"
+name = "genx"
+url = "http://genx.luaforge.net/"
